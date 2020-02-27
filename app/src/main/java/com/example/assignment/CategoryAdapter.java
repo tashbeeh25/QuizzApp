@@ -19,7 +19,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewho
     private List<CategoryMode> CategoryLIST;
 
     public CategoryAdapter(List<CategoryMode> categoryLIST) {
-        CategoryLIST = categoryLIST;
+        this.CategoryLIST = categoryLIST;
     }
 
     @NonNull

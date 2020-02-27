@@ -2,17 +2,17 @@ package com.example.assignment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.assignment.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class CategoriesActivity extends AppCompatActivity {
 
@@ -26,15 +26,21 @@ public class CategoriesActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Categories");
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recycleView = findViewById(R.id.rv);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager;
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
-
+        recycleView.setLayoutManager(layoutManager);
         List<CategoryMode> list = new ArrayList<>();
         list.add(new CategoryMode("", "Category1"));
+        list.add(new CategoryMode("", "Category2"));
+        list.add(new CategoryMode("", "Category3"));
+        list.add(new CategoryMode("", "Category4"));
+        list.add(new CategoryMode("", "Category5"));
+        list.add(new CategoryMode("", "Category6"));
         list.add(new CategoryMode("", "Category2"));
         list.add(new CategoryMode("", "Category3"));
         list.add(new CategoryMode("", "Category4"));
@@ -43,6 +49,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
         CategoryAdapter adapter = new CategoryAdapter(list);
         recycleView.setAdapter(adapter);
+
     }
 
     @Override
