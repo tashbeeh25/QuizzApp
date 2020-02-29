@@ -2,7 +2,7 @@ package com.example.assignment;
 
 public class CategoryMode {
     private String imageURL,title;
-
+    //this is the st
     public CategoryMode(String imageURL, String title)
     {
         this.imageURL = imageURL;

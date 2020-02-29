@@ -32,20 +32,33 @@ public class QuestionActivity extends AppCompatActivity {
         cateBtn = findViewById(R.id.cate_btn);
         nextBtn = findViewById(R.id.next_btn);
 
+        nextBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                count = 0;
+                playAnim(question, 0);
+            }
+        });
+
     }
 
-    private void playAnim(View view, final int value){
+    private void playAnim(final View view, final int value){
         view.animate().alpha(value).scaleX(value).scaleY(value).setDuration(500).setStartDelay(100).
                 setInterpolator(new DecelerateInterpolator()).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
-
+                if (value == 0 && count < 4){
+                    playAnim(optionsContainer.getChildAt(count),1);
+                    count++;
+                }
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-
+                if (value == 0){
+                    playAnim(view, 1);
+                }
             }
 
             @Override
