@@ -11,6 +11,7 @@ import android.widget.GridView;
 public class SetActivity extends AppCompatActivity {
 
     private GridView gridView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +23,7 @@ public class SetActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
 
         gridView = findViewById(R.id.gridview);
-        GridAdapter adapter = new GridAdapter(16);
+        GridAdapter adapter = new GridAdapter(getIntent().getIntExtra("sets", 0),getIntent().getStringExtra("title"));
         gridView.setAdapter(adapter);
     }
 
