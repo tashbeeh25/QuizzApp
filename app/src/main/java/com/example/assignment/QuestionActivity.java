@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.animation.Animator;
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ public class QuestionActivity extends AppCompatActivity {
     private int score = 0;
     private String category;
     private  int setNo;
+    private Dialog loading;
 
 
 
@@ -57,7 +60,15 @@ public class QuestionActivity extends AppCompatActivity {
         category = getIntent().getStringExtra("category");
         setNo = getIntent().getIntExtra("setNo", 1);
 
+        loading = new Dialog(this);
+        loading.setContentView(R.layout.loading);
+        loading.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
+        loading.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        loading.setCancelable(false);
+
         list = new ArrayList<>();
+
+        loading.show();
         myRef.child("SETS").child(category).child("questions").orderByChild("setNo").equalTo(setNo).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,7 +87,11 @@ public class QuestionActivity extends AppCompatActivity {
                         nextBtn.setAlpha(0.7f);
                         position++;
                         if (position == list.size()){
-                            //score activity
+                            Intent scoreInt = new Intent(QuestionActivity.this, ScoreActivity.class );
+                            scoreInt.putExtra("Score", score);
+                            scoreInt.putExtra("Total", list.size());
+                            startActivity(scoreInt);
+                            finish();
                             return;
                         }
                         count = 0;
@@ -87,11 +102,14 @@ public class QuestionActivity extends AppCompatActivity {
                     finish();
                     Toast.makeText(QuestionActivity.this, "No question", Toast.LENGTH_SHORT).show();
                 }
+                loading.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(QuestionActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                loading.dismiss();
+                finish();
             }
         });
 

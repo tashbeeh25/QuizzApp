@@ -1,7 +1,9 @@
 package com.example.assignment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -26,6 +28,8 @@ public class CategoriesActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
+    private Dialog loading;
+
     private RecyclerView recycleView;
     private List<CategoryMode> list;
     @Override
@@ -33,6 +37,12 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         Toolbar toolbar = findViewById(R.id.Toolbar);
+
+        loading = new Dialog(this);
+        loading.setContentView(R.layout.loading);
+        loading.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
+        loading.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        loading.setCancelable(false);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Categories");
@@ -48,6 +58,7 @@ public class CategoriesActivity extends AppCompatActivity {
         final CategoryAdapter adapter = new CategoryAdapter(list);
         recycleView.setAdapter(adapter);
 
+        loading.show();
         myRef.child("Categories").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -55,11 +66,14 @@ public class CategoriesActivity extends AppCompatActivity {
                     list.add(datasnapshot1.getValue(CategoryMode.class));
                 }
                 adapter.notifyDataSetChanged();
+                loading.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(CategoriesActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG);
+                loading.dismiss();
+                finish();
             }
         });
     }
