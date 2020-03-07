@@ -71,7 +71,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(CategoriesActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG);
+                Toast.makeText(CategoriesActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 loading.dismiss();
                 finish();
             }

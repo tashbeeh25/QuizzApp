@@ -112,12 +112,12 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/cate_btn"
+        android:id="@+id/share_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Categories"
+        android:text="Share"
         android:textColor="@android:color/white"
         android:backgroundTint="#891A2D"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -142,7 +142,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cate_btn"
+        app:layout_constraintStart_toEndOf="@+id/share_btn"
         app:layout_constraintTop_toBottomOf="@+id/options_contrainer" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

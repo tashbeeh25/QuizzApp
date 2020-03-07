@@ -32,7 +32,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     private TextView question, noIndictor;
     private LinearLayout optionsContainer;
-    private Button cateBtn, nextBtn;
+    private Button sharebtn, nextBtn;
     private int count = 0;
     private List<QuestionMode> list;
     private int position = 0;
@@ -40,8 +40,6 @@ public class QuestionActivity extends AppCompatActivity {
     private String category;
     private  int setNo;
     private Dialog loading;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,7 @@ public class QuestionActivity extends AppCompatActivity {
         question = findViewById(R.id.question);
         noIndictor = findViewById(R.id.no_indicator);
         optionsContainer = findViewById(R.id.options_contrainer);
-        cateBtn = findViewById(R.id.cate_btn);
+        sharebtn = findViewById(R.id.share_btn);
         nextBtn = findViewById(R.id.next_btn);
 
         category = getIntent().getStringExtra("category");
@@ -97,6 +95,22 @@ public class QuestionActivity extends AppCompatActivity {
                         count = 0;
                         playAnim(question, 0, list.get(position).getQuestion());
 
+                    });
+
+                    sharebtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String body = list.get(position).getQuestion() +
+                                    list.get(position).getOptionA() +
+                                    list.get(position).getOptionB() +
+                                    list.get(position).getOptionC() +
+                                    list.get(position).getOptionD();
+                            Intent shareInt = new Intent(Intent.ACTION_SEND);
+                            shareInt.setType("plain/text");
+                            shareInt.putExtra(Intent.EXTRA_SUBJECT, "Quizzer challenge");
+                            shareInt.putExtra(Intent.EXTRA_TEXT, body);
+                            startActivity(Intent.createChooser(shareInt,"share via"));
+                        }
                     });
                 }else{
                     finish();
