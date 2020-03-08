@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:gravity="center">
+        android:gravity="center"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:layout_width="match_parent"
