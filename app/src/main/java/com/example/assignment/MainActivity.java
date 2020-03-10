@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button startButton;
+    private Button reg_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,16 +19,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         startButton = findViewById(R.id.start_btn);
         startButton.setOnClickListener(this);
-
+        reg_btn = findViewById(R.id.reg_btn);
+        reg_btn.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.start_btn) {
-            Intent intent = new Intent(MainActivity.this, CategoriesActivity.class);
-            startActivity(intent);
+            Intent intentLogin = new Intent(MainActivity.this, Login_page.class);
+            startActivity(intentLogin);
+        }
+
+        if (v.getId() == R.id.reg_btn) {
+            Intent intentReg = new Intent(MainActivity.this, Register_Page.class);
+            startActivity(intentReg);
         }
     }
 }
+
+
+
 

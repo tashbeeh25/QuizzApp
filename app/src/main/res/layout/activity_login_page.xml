@@ -13,7 +13,7 @@
         android:layout_height="150dp"
         android:src="@drawable/login" />
 
-     <LinearLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -21,56 +21,47 @@
         android:layout_marginTop="30dp"/>
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/email"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="textPersonName"
+            android:hint="Email"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="321dp"
             tools:ignore="MissingConstraints"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:gravity="center"
-        android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/password"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Passsword"
             android:inputType="textPassword"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/username"
             tools:layout_editor_absoluteX="102dp"
             tools:ignore="MissingConstraints" />
-    </LinearLayout>
-    <Button
-        android:id="@+id/Login"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/rounded_corners"
-        android:text="Login"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
-        app:layout_constraintVertical_bias="0.244"
-        tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Don't have an account? Register."
-        tools:layout_editor_absoluteX="102dp"
-        tools:layout_editor_absoluteY="532dp" />
 
+        <Button
+            android:id="@+id/login"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_corners"
+            android:text="Login"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintVertical_bias="0.244"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/regTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Register."
+            tools:layout_editor_absoluteX="102dp"
+            tools:layout_editor_absoluteY="532dp" />
 </LinearLayout>
