@@ -83,12 +83,14 @@ public class QuestionActivity extends AppCompatActivity {
                     nextBtn.setOnClickListener((v) ->{
                         nextBtn.setEnabled(false);
                         nextBtn.setAlpha(0.7f);
+                        enableOption(true);
                         position++;
                         if (position == list.size()){
                             Intent scoreInt = new Intent(QuestionActivity.this, ScoreActivity.class );
                             scoreInt.putExtra("Score", score);
                             scoreInt.putExtra("Total", list.size());
                             startActivity(scoreInt);
+//                            QuestionActivity.this.startActivity(scoreInt);
                             finish();
                             return;
                         }
@@ -96,27 +98,28 @@ public class QuestionActivity extends AppCompatActivity {
                         playAnim(question, 0, list.get(position).getQuestion());
 
                     });
-
-                    sharebtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String body = list.get(position).getQuestion() +
-                                    list.get(position).getOptionA() +
-                                    list.get(position).getOptionB() +
-                                    list.get(position).getOptionC() +
-                                    list.get(position).getOptionD();
-                            Intent shareInt = new Intent(Intent.ACTION_SEND);
-                            shareInt.setType("plain/text");
-                            shareInt.putExtra(Intent.EXTRA_SUBJECT, "Quizzer challenge");
-                            shareInt.putExtra(Intent.EXTRA_TEXT, body);
-                            startActivity(Intent.createChooser(shareInt,"share via"));
-                        }
-                    });
-                }else{
+                }else {
                     finish();
                     Toast.makeText(QuestionActivity.this, "No question", Toast.LENGTH_SHORT).show();
                 }
                 loading.dismiss();
+
+                sharebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String body = list.get(position).getQuestion() +
+                                list.get(position).getOptionA() +
+                                list.get(position).getOptionB() +
+                                list.get(position).getOptionC() +
+                                list.get(position).getOptionD();
+                        Intent shareInt = new Intent(Intent.ACTION_SEND);
+                        shareInt.setType("plain/text");
+                        shareInt.putExtra(Intent.EXTRA_SUBJECT, "Quizzer challenge");
+                        shareInt.putExtra(Intent.EXTRA_TEXT, body);
+                        startActivity(Intent.createChooser(shareInt,"share via"));
+                    }
+                });
+
             }
 
             @Override
@@ -126,13 +129,10 @@ public class QuestionActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 
     private void playAnim(final View view, final int value, final String data){
-        view.animate().alpha(value).scaleX(value).scaleY(value).setDuration(500).setStartDelay(100).
-                setInterpolator(new DecelerateInterpolator()).setListener(new Animator.AnimatorListener() {
+        view.animate().alpha(value).scaleX(value).scaleY(value).setDuration(500).setStartDelay(100).setInterpolator(new DecelerateInterpolator()).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 if (value == 0 && count < 4){
@@ -155,10 +155,10 @@ public class QuestionActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 if (value == 0){
                     try{
-                        ((TextView)view).setText(data);
+                        ((TextView) view).setText(data);
                         noIndictor.setText(position+1+"/"+list.size());
                     }catch(ClassCastException e){
-                        ((Button)view).setText(data);
+                        ((Button) view).setText(data);
 
                     }
                     view.setTag(data);
@@ -184,10 +184,11 @@ public class QuestionActivity extends AppCompatActivity {
         nextBtn.setAlpha(1);
         if (selectOption.getText().toString().equals((list.get(position).getCorrectANS()))){
             //correct
-            score ++;
+            score++;
             selectOption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#178f01")));
 
         }else{
+            //incorrect
             selectOption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#db0f0f")));
             Button correctOption = (Button) optionsContainer.findViewWithTag(list.get(position).getCorrectANS());
             correctOption.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#178f01")));
@@ -202,6 +203,4 @@ public class QuestionActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }

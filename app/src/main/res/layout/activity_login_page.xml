@@ -36,7 +36,7 @@
             android:layout_marginTop="12dp"
             android:hint="Passsword"
             android:inputType="textPassword"
-            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/email"
             tools:layout_editor_absoluteX="102dp"
             tools:ignore="MissingConstraints" />
 

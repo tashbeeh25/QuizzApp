@@ -21,7 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Login_page extends AppCompatActivity {
-    EditText email, password;
+    EditText email, pass;
     Button login;
     FirebaseAuth fAuth;
     TextView regTextView;
@@ -32,7 +32,7 @@ public class Login_page extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
 
         email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
+        pass = findViewById(R.id.password);
         fAuth = FirebaseAuth.getInstance();
         regTextView = findViewById(R.id.regTextView);
         login = findViewById(R.id.login);
@@ -41,7 +41,7 @@ public class Login_page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String UserEmail = email.getText().toString().trim();
-                String userPass = password.getText().toString().trim();
+                String userPass = pass.getText().toString().trim();
 
                 if (TextUtils.isEmpty(UserEmail)){
                     email.setError("Please enter your email!");
@@ -49,19 +49,22 @@ public class Login_page extends AppCompatActivity {
                 }
 
                 if (TextUtils.isEmpty(userPass)){
-                    password.setError("Please enter a password!");
+                    pass.setError("Please enter a password!");
                     return;
                 }
 
-                if (password.length() < 6){
-                    password.setError("Password must be longer");
+                if (pass.length() < 6){
+                    pass.setError("Password must be longer");
                     return;
                 }
 
-                fAuth.createUserWithEmailAndPassword(UserEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.signInWithEmailAndPassword(UserEmail, userPass).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            if(task.getResult().getAdditionalUserInfo().isNewUser()){
+
+                            }
                             Toast.makeText(Login_page.this, "Login Successful!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
                         }else{
