@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
@@ -34,9 +36,9 @@ public class QuestionActivity extends AppCompatActivity {
     private LinearLayout optionsContainer;
     private Button sharebtn, nextBtn;
     private int count = 0;
-    private List<QuestionMode> list;
+    private List<QuestionMode> list, listTemp;
     private int position = 0;
-    private int score = 0;
+    private static int score = 0;
     private String category;
     private  int setNo;
     private Dialog loading;
@@ -65,9 +67,12 @@ public class QuestionActivity extends AppCompatActivity {
         loading.setCancelable(false);
 
         list = new ArrayList<>();
+        listTemp = new ArrayList<>();
 
         loading.show();
+
         myRef.child("SETS").child(category).child("questions").orderByChild("setNo").equalTo(setNo).addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -81,17 +86,30 @@ public class QuestionActivity extends AppCompatActivity {
                     }
                     playAnim(question, 0, list.get(position).getQuestion());
                     nextBtn.setOnClickListener((v) ->{
+//                        questionCount += 1;
                         nextBtn.setEnabled(false);
                         nextBtn.setAlpha(0.7f);
-                        enableOption(true);
+//                        enableOption(true);
                         position++;
                         if (position == list.size()){
-                            Intent scoreInt = new Intent(QuestionActivity.this, ScoreActivity.class );
-                            scoreInt.putExtra("Score", score);
-                            scoreInt.putExtra("Total", list.size());
-                            startActivity(scoreInt);
-//                            QuestionActivity.this.startActivity(scoreInt);
-                            finish();
+//
+                            Intent questionIntent = new Intent(QuestionActivity.this, QuestionActivity.class);
+                            questionIntent.putExtra("category", category);
+                            questionIntent.putExtra("setNo", ++setNo);
+                            if(setNo == 6) {
+                                Intent scoreInt = new Intent(QuestionActivity.this, ScoreActivity.class );
+                                scoreInt.putExtra("Score", score);
+                                scoreInt.putExtra("Total", list.size());
+                                QuestionActivity.this.startActivity(scoreInt);
+                                score = 0;   //resetting score for other categories.
+                                questionIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                finish();
+                            } else {
+                                finish();
+                                QuestionActivity.this.startActivity(questionIntent);
+                                //startActivity(questionIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+
+                            }
                             return;
                         }
                         count = 0;
@@ -182,6 +200,7 @@ public class QuestionActivity extends AppCompatActivity {
         enableOption(false);
         nextBtn.setEnabled(true);
         nextBtn.setAlpha(1);
+        Log.d("-----> "+selectOption.getText().toString()," -----> "+list.get(position).getCorrectANS());
         if (selectOption.getText().toString().equals((list.get(position).getCorrectANS()))){
             //correct
             score++;

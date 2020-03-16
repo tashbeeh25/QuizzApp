@@ -2,6 +2,7 @@ package com.example.assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,12 +22,13 @@ public class ScoreActivity extends AppCompatActivity {
         total = findViewById(R.id.total);
         done = findViewById(R.id.done_btn);
 
-        scored.setText(String.valueOf(getIntent().getIntExtra("scored", 0)));
-        total.setText("OUT OF "+ String.valueOf(getIntent().getIntExtra("total", 0)));
+        scored.setText(String.valueOf(getIntent().getIntExtra("Score", 0)));
+        total.setText("OUT OF "+ String.valueOf(getIntent().getIntExtra("Total", 0)));
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
                 finish();
             }
         });
