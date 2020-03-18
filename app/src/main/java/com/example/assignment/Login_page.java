@@ -66,7 +66,9 @@ public class Login_page extends AppCompatActivity {
 
                             }
                             Toast.makeText(Login_page.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
+//                            startActivity(new Intent(getApplicationContext(), Profile_Page.class));
+                            Intent profile_page = new Intent(Login_page.this , Profile_Page.class);
+                            startActivity(profile_page);
                         }else{
                             Toast.makeText(Login_page.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

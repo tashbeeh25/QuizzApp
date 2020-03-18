@@ -54,7 +54,7 @@ public class Register_Page extends AppCompatActivity {
 
 
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
+            startActivity(new Intent(getApplicationContext(), Profile_Page.class));
             finish();
         }
 
