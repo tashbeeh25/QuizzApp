@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-public class SetActivity extends AppCompatActivity {
+public class  SetActivity extends AppCompatActivity {
 
     private GridView gridView;
 

@@ -21,7 +21,8 @@
             android:text="@string/app_name"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold">
+        </TextView>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -43,19 +44,38 @@
             android:layout_height="wrap_content"
             android:background="@drawable/category_bg"
             android:padding="16dp"
-            android:text="TextView"
-            android:textColor="@android:color/white" />
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textAllCaps="true"/>
 
         <TextView
             android:id="@+id/no_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="16dp"
-            android:text="5/10"
+            android:padding="8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="10 seconds"
+            android:padding="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/progressTimer"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="5" />
 
     </LinearLayout>
 
@@ -63,10 +83,10 @@
         android:id="@+id/options_contrainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -77,8 +97,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#4A0750"
-            android:textColor="@android:color/white"
-            android:text="Button" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/button3"
@@ -87,8 +106,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#4A0750"
-            android:textColor="@android:color/white"
-            android:text="Button" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/button4"
@@ -97,8 +115,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#4A0750"
-            android:textColor="@android:color/white"
-            android:text="Button" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/button5"
@@ -107,8 +124,27 @@
             android:layout_margin="8dp"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#4A0750"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="2dp"
+            android:textColor="#5C0A0A"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/restart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="#891A2D"
+            android:text="Restart"
             android:textColor="@android:color/white"
-            android:text="Button" />
+            android:visibility="invisible" />
 
     </LinearLayout>
 

@@ -71,60 +71,17 @@ public class Profile_Page extends AppCompatActivity {
         start = findViewById(R.id.Start);
 
 
-//        db.collection("user").addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//                if (e != null){
-//
-//                }
-//
-//                for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges())
-//                {
-//                    email.setText(documentChange.getDocument().getData().get("Email").toString());
-//                    course.setText(documentChange.getDocument().getData().get("Course").toString());
-//                    name.setText(documentChange.getDocument().getData().get("Name").toString());
-//
-//
-//                }
-//            }
-//        });
-
         db.collection("user").document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 email.setText(documentSnapshot.getString("Email"));
                 name.setText(documentSnapshot.getString("Name"));
                 course.setText(documentSnapshot.getString("Course"));
+
+
             }
         });
 
-/*        Query query = dataRef.orderByChild("Email").equalTo(user.getEmail());
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("-----> "+ dataSnapshot.getChildren(),"");
-                for (DataSnapshot datasnapshot : dataSnapshot.getChildren()){
-                    String names = ""+datasnapshot.child("Name").getValue();
-                    String courses = ""+datasnapshot.child("Course").getValue();
-                    String emails = ""+datasnapshot.child("Email").getValue();
-                    String images = ""+dataSnapshot.child("Image").getValue();
-                    name.setText(names);
-                    course.setText(courses);
-                    email.setText(emails);
-                    try{
-                        Picasso.get().load(images).into(image);
-                    }catch(Exception ex){
-                        Picasso.get().load(R.drawable.add_image).into(image);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +95,7 @@ public class Profile_Page extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
+                startActivity(new Intent(getApplicationContext(), Level.class));
             }
         });
 

@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Profile_Page"></activity>
+        <activity android:name=".CategoryAdapterEasy"></activity>
+        <activity android:name=".GridAdapterEasy" />
+        <activity android:name=".QuestionEasy" />
+        <activity android:name=".SetsEasy" />
+        <activity android:name=".CategoriesEasy" />
+        <activity android:name=".Level" />
+        <activity android:name=".Profile_Page" />
         <activity android:name=".Register_Page" />
         <activity android:name=".Login_page" />
         <activity android:name=".ScoreActivity" />

@@ -10,11 +10,14 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +35,11 @@ public class QuestionActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
-    private TextView question, noIndictor;
+
+    private TextView question, noIndictor, timer, message;
     private LinearLayout optionsContainer;
-    private Button sharebtn, nextBtn;
+    private Button sharebtn, nextBtn, restartBtn;
+    private Button button1, button2, button3, button4;
     private int count = 0;
     private List<QuestionMode> list, listTemp;
     private int position = 0;
@@ -42,6 +47,48 @@ public class QuestionActivity extends AppCompatActivity {
     private String category;
     private  int setNo;
     private Dialog loading;
+    private ProgressBar progress;
+
+    int secondsRemain = 10;
+    CountDownTimer timerr = new CountDownTimer(10000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            secondsRemain--;
+            timer.setText(Integer.toString(secondsRemain) + " sec");
+            progress.setProgress(10 - secondsRemain);
+
+        }
+
+        @Override
+        public void onFinish() {
+            button1.setEnabled((false));
+            button2.setEnabled((false));
+            button3.setEnabled((false));
+            button4.setEnabled((false));
+            message.setText("Time is up!!!");
+
+
+            restartBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent restartInt = new Intent(QuestionActivity.this, CategoriesActivity.class);
+                    startActivity(restartInt);
+
+                }
+            });
+
+            final Handler handler = new Handler();
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    restartBtn.setVisibility(View.VISIBLE);
+                }
+            }, 4000);
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +97,19 @@ public class QuestionActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.Toolbar);
 
         setSupportActionBar(toolbar);
-
         question = findViewById(R.id.question);
         noIndictor = findViewById(R.id.no_indicator);
+        timer = findViewById(R.id.timer);
         optionsContainer = findViewById(R.id.options_contrainer);
         sharebtn = findViewById(R.id.share_btn);
         nextBtn = findViewById(R.id.next_btn);
+        button1 = findViewById(R.id.button);
+        button2 = findViewById(R.id.button3);
+        button3 = findViewById(R.id.button4);
+        button4 = findViewById(R.id.button5);
+        progress = findViewById(R.id.progressTimer);
+        message = findViewById(R.id.message);
+        restartBtn = findViewById(R.id.restart);
 
         category = getIntent().getStringExtra("category");
         setNo = getIntent().getIntExtra("setNo", 1);
@@ -66,15 +120,24 @@ public class QuestionActivity extends AppCompatActivity {
         loading.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         loading.setCancelable(false);
 
+
+
         list = new ArrayList<>();
         listTemp = new ArrayList<>();
+        timer.setText("10 sec");
+        progress.setProgress(0);
 
         loading.show();
+
+
 
         myRef.child("SETS").child(category).child("questions").orderByChild("setNo").equalTo(setNo).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (setNo < 6)
+                    noIndictor.setText(setNo+ "/"+ "5");
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     list.add(snapshot.getValue(QuestionMode.class));
                 }
@@ -84,22 +147,26 @@ public class QuestionActivity extends AppCompatActivity {
                                 checkAnswer((Button)v);
                         });
                     }
+                    timerr.start();
                     playAnim(question, 0, list.get(position).getQuestion());
                     nextBtn.setOnClickListener((v) ->{
+
 //                        questionCount += 1;
                         nextBtn.setEnabled(false);
                         nextBtn.setAlpha(0.7f);
 //                        enableOption(true);
                         position++;
+
                         if (position == list.size()){
 //
                             Intent questionIntent = new Intent(QuestionActivity.this, QuestionActivity.class);
                             questionIntent.putExtra("category", category);
                             questionIntent.putExtra("setNo", ++setNo);
+                            noIndictor.setText(setNo+ "/"+ "5");
                             if(setNo == 6) {
                                 Intent scoreInt = new Intent(QuestionActivity.this, ScoreActivity.class );
                                 scoreInt.putExtra("Score", score);
-                                scoreInt.putExtra("Total", list.size());
+                                scoreInt.putExtra("Total", 5);
                                 QuestionActivity.this.startActivity(scoreInt);
                                 score = 0;   //resetting score for other categories.
                                 questionIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -174,7 +241,7 @@ public class QuestionActivity extends AppCompatActivity {
                 if (value == 0){
                     try{
                         ((TextView) view).setText(data);
-                        noIndictor.setText(position+1+"/"+list.size());
+//                        noIndictor.setText(position+1+"/"+list.size());
                     }catch(ClassCastException e){
                         ((Button) view).setText(data);
 
@@ -222,4 +289,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
         }
     }
+
 }
+
+
